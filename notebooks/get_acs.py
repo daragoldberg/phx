@@ -16,7 +16,7 @@ def get_us(source,year,col):
     df.columns = json.loads(resp)[0]
     return df
 
-def get_state(source,year,col):
+def get_az(source,year,col):
     base_url = f'https://api.census.gov/data/{year}/{source}'
     url = f'{base_url}?get={col}&for=state:04&key={census_key}'
     resp = requests.request('GET',url).content
@@ -24,7 +24,7 @@ def get_state(source,year,col):
     df.columns = json.loads(resp)[0]
     return df
 
-def get_county(source,year,col):
+def get_az_co(source,year,col):
     base_url = f'https://api.census.gov/data/{year}/{source}'
     url = f'{base_url}?get={col}&for=county:*&in=state:04&key={census_key}'
     resp = requests.request('GET',url).content
