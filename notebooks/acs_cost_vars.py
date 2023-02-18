@@ -1,5 +1,5 @@
 # Variables needed for ACS analysis
-# lists of estimates and margins of error needed for various data pulllls
+# lists of estimates and margins of error needed for various data pulls
 
 ## RENT-BURDEN ##
 # B25070 GROSS RENT AS A PERCENTAGE OF HOUSEHOLD INCOME IN THE PAST 12 MONTHS

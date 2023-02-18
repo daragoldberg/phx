@@ -30,7 +30,7 @@ def get_az_co(source,year,col):
     resp = requests.request('GET',url).content
     df = pd.DataFrame(json.loads(resp)[1:])
     df.columns = json.loads(resp)[0]
-    df['GEO_ID'] = df.GEO_ID.str[-5:]
+    df['GEO_ID'] = df['GEO_ID'].str[-5:]
     return df
 
 def get_phx(source,year,col):
@@ -39,7 +39,7 @@ def get_phx(source,year,col):
     resp = requests.request('GET',url).content
     df = pd.DataFrame(json.loads(resp)[1:])
     df.columns = json.loads(resp)[0]
-    df.GEO_ID  = df.state + df.place
+    df['GEO_ID'] = df.state + df.place
     df = df[df.GEO_ID=='0455000'].drop(['NAME','state','place'],axis=1)
     return df
 
@@ -58,7 +58,7 @@ def get_bgp(source,year,col):
     df = pd.DataFrame(json.loads(resp)[1:])
     df.columns = json.loads(resp)[0]
     df = df.drop(['NAME','state','county','tract','block group'],axis=1)
-    df.GEO_ID = df.GEO_ID.str[-12:]
+    df['GEO_ID'] = df['GEO_ID'].str[-12:]
     return df
 
 def clean_data(df,var_list):
