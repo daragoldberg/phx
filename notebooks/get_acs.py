@@ -4,7 +4,6 @@ import os
 import json
 
 census_key = os.getenv('Census_API')
-from geo import *
 
 #### ACS DATA GETTERS - IMPORT INTO ANALYSIS NOTEBOOKS
 
