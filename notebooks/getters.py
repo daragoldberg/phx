@@ -87,14 +87,17 @@ def get_comp_cities(source,year,col):
             frames.append(df)
     dff = pd.concat(frames)
     
-    #special for Indianapolis
-    url_ind = f'{base_url}{year}/{source}?get={col}&for=consolidated%20city:36000&in=state:18&key={census_key}'
-    resp_ind = requests.request('GET',url_ind).content
-    df_ind = pd.DataFrame(json.loads(resp_ind)[1:])
-    df_ind.columns = json.loads(resp_ind)[0]
-    df_ind['GEO_ID'] = df_ind.state+df_ind['consolidated city']
-    df_ind.rename(columns={'consolidated city':'place'},inplace=True)
-    dff = pd.concat([dff,df_ind])
+    #special for Indianapolis, consolidated city, not in 5-year acs
+    if source=='acs/acs1':
+        pass
+    else:
+        url_ind = f'{base_url}{year}/{source}?get={col}&for=consolidated%20city:36000&in=state:18&key={census_key}'
+        resp_ind = requests.request('GET',url_ind).content
+        df_ind = pd.DataFrame(json.loads(resp_ind)[1:])
+        df_ind.columns = json.loads(resp_ind)[0]
+        df_ind['GEO_ID'] = df_ind.state+df_ind['consolidated city']
+        df_ind.rename(columns={'consolidated city':'place'},inplace=True)
+        dff = pd.concat([dff,df_ind])
     
     if source[:3]=='dec':
         dff = dff.drop(['state','place'],axis=1)
