@@ -125,6 +125,16 @@ def get_bgp(source,year,col):
         df['GEO_ID'] = df['GEO_ID'].str[-12:]
     return df
 
+def get_blk(source,year,col,geodf):
+    url = f'{base_url}{year}/{source}?get={col}&for=block:*&in=state:04&in=county:013&in=tract*&key={census_key}'
+    resp = requests.request('GET',url).content
+    df = pd.DataFrame(json.loads(resp)[1:])
+    df.columns = json.loads(resp)[0]
+    df['GEO_ID'] = df.state + df.county + df.tract + df.block
+    df = df.drop(['state','county','tract','block'],axis=1)
+    dff = pd.merge(geodf,df,how='left',on='GEO_ID')
+    return dff
+    
 
 def get_puma(source,year,col):
     url = f'{base_url}{year}/{source}?get={col}&for=public%20use%20microdata%20area:*&in=state:04&key={census_key}'

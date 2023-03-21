@@ -7,9 +7,10 @@ bgp_10 = pd.read_csv('../data/geo/bgp_vil_10.csv')
 bgp_20 = pd.read_csv('../data/geo/bgp_vil_20.csv')
 for df in [bgp_10,bgp_20]: df.geoid = df.geoid.apply(lambda x: '{0:0>12}'.format(x))
     
-#get rid of area & geo stuff not being useed
-bgp_20 = bgp_20.drop(['aland20','awater20','lat20','lon20','land_acre'],axis=1)
-bgp_10 = bgp_10.drop(['aland10','awater10','lat10','lon10','land_acre'],axis=1)
+#get rid of area & geo stuff not being used
+drop_cols=['aland','awater','lat','lon','land_acre']
+bgp_20 = bgp_20.drop(drop_cols,axis=1)
+bgp_10 = bgp_10.drop(drop_cols,axis=1)
 
 
 #function that will aggregate estimates, calc new MOEs and CVs
