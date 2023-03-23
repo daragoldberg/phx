@@ -17,7 +17,10 @@
 #- 010 = Mobile home
 #- 011 = RV, boat, other
 
-hou_rename = {'B25024_001E':'u_tot_E','B25024_001M':'u_tot_M'}
+hou_rename = {'B25024_001E':'u_tot_E','B25024_001M':'u_tot_M','B25024_006E':'u_59_E',\
+              'B25024_006M':'u_59_M','B25024_007E':'u_1019_E','B25024_007M':'u_1019_M',\
+              'B25024_008E':'u_2049_E','B25024_008M':'u_2049_M','B25024_009E':'u_o50_E',\
+              'B25024_009M':'u_o50_M',}
 
 #Create separate lists for estimates and MOEs for aggregation
 U1E = ['B25024_002E','B25024_003E']
