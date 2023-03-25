@@ -1,9 +1,12 @@
 import pandas as pd
 import numpy as np
+from geos import *
 
 
 base_url = 'https://tigerweb.geo.census.gov/tigerwebmain/Files/'
 acre = 0.000247105
+
+places_int = [int(x) for x in maricopa_places]
 
 
 #get area data for cities and consolidated city (indianapolis)
@@ -43,6 +46,18 @@ def make_az(year):
     df = df[0]   
     df = df[['GEOID','BASENAME','AREALAND','AREAWATER']].copy()
     df = df[df.GEOID==4]
+    df['AREALAND_ACRE'] = df.AREALAND * acre
+    for col in df.columns[1:]:
+        df.rename(columns={col:f'{col}{year[-2:]}'},inplace=True)
+    return df
+
+def make_maricopa_pl(year):
+    df = pd.read_html(f'{base_url}tab20/tigerweb_tab20_incplace_{year}_az.html')
+    dff = pd.read_html(f'{base_url}tab20/tigerweb_tab20_cdp_{year}_az.html')
+    df,dff = df[0],dff[0]
+    df = pd.concat([df,dff])
+    df = df[df.GEOID.isin(places_int)]
+    df = df[['GEOID','BASENAME','AREALAND','AREAWATER']].copy()
     df['AREALAND_ACRE'] = df.AREALAND * acre
     for col in df.columns[1:]:
         df.rename(columns={col:f'{col}{year[-2:]}'},inplace=True)

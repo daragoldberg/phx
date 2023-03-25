@@ -35,4 +35,4 @@ UOthE = ['B25024_010E','B25024_011E']
 UOthM = ['B25024_010M','B25024_011M']
 
 #all variables we want to delete after usee
-hou_vars = U1E+U1M+U24E+U24M+U520E+U520M+Uo20E+Uo20M+UOthE+UOthM
+hou_vars = U1E+U1M+U24E+U24M+UOthE+UOthM

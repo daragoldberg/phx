@@ -2,16 +2,9 @@ import pandas as pd
 import requests
 import os
 import json
+from geos import *
 
 census_key = os.getenv('Census_API')
-comp_cities = {'04':['73000','65000','27820'],'48':['65000','19000'],'12':['35000']}
-
-#AZ:tempe,scottsdale,glendale TX: san antonio, dallas
-#FL: jacksonville
-#Indianapolis consolidated: '18','36000'
-
-#removed: louisville, ky '21':['48000'] - no data in 2010
-
 
 #### DATA GETTERS - IMPORT INTO ANALYSIS NOTEBOOKS
 
@@ -73,6 +66,20 @@ def get_phx(source,year,col):
         df = df.drop(['state','place'],axis=1)
     else:
         df = df.drop(['NAME','state','place'],axis=1)
+    return df
+
+def get_az_plc(source,year,col):
+    url = f'{base_url}{year}/{source}?get={col}&for=place:*&in=state:04&key={census_key}'
+    resp = requests.request('GET',url).content
+    df = pd.DataFrame(json.loads(resp)[1:])
+    df.columns = json.loads(resp)[0]
+    df['GEO_ID'] = df.state + df.place
+    df = df[df.GEO_ID.isin(maricopa_places)]
+    if source[:3]=='dec':
+        df = df.drop(['state','place'],axis=1)
+    else:
+        df = df.drop(['NAME','state','place'],axis=1)
+    df['GEO_ID'] = df.GEO_ID.map(maricopa_places_dict)
     return df
 
 def get_comp_cities(source,year,col):
