@@ -94,3 +94,15 @@ def get_median_moe(buckets, row, DF=1.1):
                     upperbound = (p_upper - C1_u)*(A2_u-A1_u)/(C2_u-C1_u) + A1_u
 
                 return (upperbound - lowerbound)*1.645/2
+            
+            
+def calc_change(df,yr0,yr1,var_list):
+    for var in var_list:
+        df[f'{var}_{yr0[-2:]}{yr1[-2:]}E'] = df[f'{var}_{yr1[-2:]}E'] - df[f'{var}_{yr0[-2:]}E']
+        df[f'{var}_{yr0[-2:]}{yr1[-2:]}M'] = df.apply(lambda x: (get_moe([x[f'{var}_{yr0[-2:]}M'],\
+                                                                                x[f'{var}_{yr1[-2:]}M']])),axis=1)
+        df[f'{var}_{yr0[-2:]}{yr1[-2:]}C'] = df.apply(lambda x: (get_cv(x[f'{var}_{yr0[-2:]}{yr1[-2:]}E'],\
+                                                                            x[f'{var}_{yr0[-2:]}{yr1[-2:]}M'])),axis=1)
+        for  y  in [yr0[-2:],yr1[-2:]]:
+            df[f'{var}_{y}P'] = df[f'{var}_{y}E'] / df[f'tot_{y}E']
+    return df
