@@ -28,10 +28,10 @@ maricopa_places_dict={'0455000':'Phoenix','0454050':'Peoria','0458150':'Queen Cr
                  '0470530':'Sun Lakes','0474540':'Tonopah','0484000':'Wintersburg',\
                  '0484140':'Wittmann'}
 
-comp_cities = {'48':['65000','19000'],'12':['35000']}
+comp_cities = {'48':['65000','35000'],'12':['35000']} 
 
-#AZ:tempe,scottsdale,glendale TX: san antonio, dallas
+#AZ:tempe,scottsdale,glendale TX: san antonio, houston
 #FL: jacksonville
 #Indianapolis consolidated city: '18','36000' - has to be imported separately
 
-#removed: louisville, ky '21':['48000'] - no data in 2010
+#removed: louisville, ky '21':['48000'] - no data in 2010, removed dallas 4819000
